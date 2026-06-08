@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "en.ke - URL Shortener",
+  "name": "en.ke — URL Shortener & QR Codes",
+  "short_name": "en.ke",
   "version": "1.0.0",
-  "description": "Shorten URLs and generate QR codes with en.ke — right from your browser.",
+  "description": "Shorten URLs, generate QR codes, and manage links with en.ke — all without leaving your current page.",
+  "minimum_chrome_version": "108",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
