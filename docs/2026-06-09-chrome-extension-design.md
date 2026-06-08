@@ -203,8 +203,19 @@ if (extId && urlParams.get('source') === 'extension') {
 
 ## 11. 待完成
 
-- [ ] 替换 `public/icons/` 中的占位图标为 en.ke 品牌图标
-- [ ] 在 `www.en.ke/login` 添加扩展消息回传代码
-- [ ] 加载为 Chrome 未打包扩展测试
-- [ ] 提交 Chrome Web Store 审核
+- [x] 替换 `public/icons/` 中的占位图标为 en.ke 品牌图标
+- [x] 在 `www.en.ke/login` 添加扩展消息回传代码
+- [x] 加载为 Chrome 未打包扩展测试
+- [ ] 提交 Chrome Web Store 审核 → 见 `docs/store-listing.md`
 - [ ] 提交 Edge Add-ons 审核
+
+## 12. 更新记录
+
+| 日期 | 变更 |
+|------|------|
+| 2026-06-09 | API URL 从 `en.ke` 更正为 `api.en.ke` |
+| 2026-06-09 | 隐私政策增加 Browser Extension 章节 |
+| 2026-06-09 | Plan 信息通过 `/me` API 获取，Popup init 时不覆盖 recentLinks |
+| 2026-06-09 | 发布脚本 `publish.sh` + store assets 生成 |
+| 2026-06-09 | 右键缩短增加剪贴板复制 + 页面 toast 反馈 |
+| 2026-06-09 | Slug 实时有效性检查（`/api/v1/slug-check`）|

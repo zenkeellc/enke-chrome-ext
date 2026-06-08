@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="280" viewBox="0 0 440 280">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0e0e18"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="440" height="280" fill="url(#bg)" rx="16"/>
+  <g transform="translate(220,115)">
+    <path d="M 8 66 C 8 16, 34 16, 34 32 C 34 48, 58 16, 74 40"
+      stroke="#00e5ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="8" cy="66" r="7" fill="#00e5ff"/>
+    <circle cx="74" cy="40" r="7" fill="#00e5ff"/>
+  </g>
+  <text x="220" y="210" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="28" font-weight="800" fill="#e8e8ed" letter-spacing="-0.5">en.ke</text>
+  <text x="220" y="242" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="13" font-weight="600" fill="#00e5ff" letter-spacing="2" text-transform="uppercase">URL SHORTENER &amp; QR CODES</text>
+</svg>
