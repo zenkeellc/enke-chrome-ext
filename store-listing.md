@@ -1,71 +1,107 @@
-# en.ke — Chrome Web Store Listing
+# en.ke — Chrome Web Store 表单对照表
 
-## Store listing info
-
-- **Name:** en.ke — URL Shortener & QR Codes
-- **Short name:** en.ke
-- **Description:** Shorten URLs, generate QR codes, and manage links with en.ke — all without leaving your current page.
-- **Category:** Productivity
-- **Language:** English (en)
+按页面顺序逐字段复制粘贴。
 
 ---
 
-## Privacy disclosure
+## Store listing 标签页
+
+| 字段 | 内容 |
+|------|------|
+| Name | en.ke — URL Shortener & QR Codes |
+| Short name | en.ke |
+| Description | Shorten URLs, generate QR codes, and manage links with en.ke — all without leaving your current page. |
+| Category | Productivity |
+| Language | English (en) |
+
+---
+
+## Privacy practices 标签页
+
+### Single purpose description
+
+```
+Shorten URLs and generate QR codes with en.ke. Right-click to shorten, AI-powered slugs, plan-aware customization.
+```
+
+### Permission justification
+
+**activeTab:**
+
+```
+To read the current page URL for shortening
+```
+
+**contextMenus:**
+
+```
+To provide right-click "Shorten" commands
+```
+
+**notifications:**
+
+```
+To notify you when a link is created via context menu
+```
+
+**scripting:**
+
+```
+To show a toast notification and copy the short URL to your clipboard
+```
+
+**storage:**
+
+```
+To save your login session and recent links locally
+```
+
+**Host permission:**
+
+```
+This extension connects only to en.ke (api.en.ke, www.en.ke) and the en.ke authentication server (user.zenkee.com). No third-party tracking or analytics are included.
+```
 
 ### Are you using remote code?
 
-**No.** All JavaScript, HTML, CSS, and other executable code is bundled and shipped within the extension package. The extension does not load, download, or execute any remote code at runtime. External API calls are limited to data exchange only (JSON requests/responses).
+选择：**No, I am not using Remote code**
 
-### What user data do you plan to collect from users now or in the future?
+Justification:
 
-#### Data collected now
+```
+All JavaScript, CSS, and HTML are bundled in the extension package. No code is fetched or executed from external sources at runtime. API calls are data-only (JSON).
+```
 
-| Data | Purpose | Transmission | Storage |
-|------|---------|-------------|---------|
-| **URL being shortened** (page URL or user-selected text) | Core functionality — sent to en.ke API to create a short link | Transmitted to `api.en.ke` over HTTPS | Not persisted on any server; stored locally as part of recent-links history |
-| **Authentication tokens** (JWT access + refresh tokens) | Identify the user to the en.ke API for rate limiting, plan features, and link ownership | Transmitted to `user.zenkee.com` and `api.en.ke` in HTTP `Authorization` headers | Stored in `chrome.storage.local` (encrypted at rest by Chrome) |
-| **User profile** (user ID, username, email) | Display user identity and plan tier in the extension popup | Fetched from `api.en.ke/api/v1/me` and received via login flow from `www.en.ke` | Stored in `chrome.storage.local` |
-| **Plan/subscription metadata** (plan name, Stripe subscription status, role) | Enforce feature limits per plan tier | Fetched from `api.en.ke/api/v1/me` | Stored in `chrome.storage.local` |
-| **Shortened link results** (slug, short URL, original URL) | Display recent links history in the popup | None — derived from API responses | Stored in `chrome.storage.local` (last 10 links) |
+### What user data do you plan to collect?
 
-#### Data we do NOT collect
+**只勾选这两项，其他全部不勾选：**
 
-- Browsing history
-- Page content
-- Cookies or other site data
-- Personally identifiable information beyond what the user voluntarily provides during login
-- Location / IP address
-- Device or browser fingerprint
-- Analytics, telemetry, or crash reports
+#### ✅ Authentication information
 
-#### Data collected in the future
+```
+JWT access and refresh tokens stored in chrome.storage.local to authenticate API requests to en.ke.
+```
 
-No additional data collection is planned. If this changes, the privacy disclosure will be updated and users will be notified via the extension's update mechanism.
+#### ✅ User activity
 
-### Permissions justification
+```
+The URL the user chooses to shorten is transmitted to api.en.ke to create a short link. Shortened link results are stored locally in chrome.storage.local for recent-links history.
+```
 
-| Permission | Why it's needed |
-|-----------|-----------------|
-| `activeTab` | To get the current page URL when the user clicks the extension icon or context menu — no background tab access |
-| `contextMenus` | To add "Shorten this page" and "Shorten link" right-click menu items |
-| `notifications` | To show a brief completion badge ("✓") on the extension icon after shortening |
-| `scripting` | To inject a clipboard-copy toast onto the current page after a successful shorten via context menu |
-| `storage` | To persist auth tokens, user profile, and recent links history across sessions |
-| `host_permissions` to `api.en.ke`, `user.zenkee.com`, `www.en.ke` | To call the en.ke API for shortening/authentication, and to receive login messages from the en.ke website |
+### 三项合规声明
 
-### Third-party services
+全部勾选：
 
-The extension communicates with:
-- **en.ke API** (`api.en.ke`) — URL shortening, AI slug suggestions, user profile
-- **en.ke Auth** (`user.zenkee.com`) — token refresh
-- **en.ke Website** (`www.en.ke`) — login flow (opens in browser tab; auth tokens passed back via `postMessage` or content script)
+- ✅ I do not sell or transfer user data to third parties, apart from the approved use cases
+- ✅ I do not use or transfer user data for purposes that are unrelated to my item's single purpose
+- ✅ I do not use or transfer user data to determine creditworthiness or for lending purposes
 
-No data is shared with any other third parties. No analytics, advertising, or tracking services are used.
+### Privacy policy URL
 
-### Data retention
+```
+https://en.ke/privacy
+```
 
-All user data stored locally (`chrome.storage.local`) is cleared when the user:
-- Logs out (clears all stored state)
-- Uninstalls the extension (Chrome automatically removes extension storage)
+---
 
-Server-side data (created short links, user account) is managed via the en.ke web application and subject to the en.ke privacy policy.
+填完后点页面底部 **Save draft**，然后回到主页面 **Submit for review**。
