@@ -52,23 +52,22 @@ if command -v gh &> /dev/null; then
     --notes "## enke Chrome Extension v$VERSION
 
 ### Install
-- **Chrome Web Store:** [Install](https://chromewebstore.google.com)
-- **Offline:** Download \`$ZIPFILE\` below → Chrome → \`chrome://extensions\` → Developer mode → Load unpacked
-- **Source:** \`git clone git@github-zenkee:zenkeellc/enke-chrome-ext.git\`
+- **Chrome Web Store:** [Install from Chrome Web Store](https://chromewebstore.google.com/detail/enke-url-shortener-qr-cod/EXTENSION_ID_PLACEHOLDER)
+- **Offline (.crx):** Download \`$ZIPFILE\` below → Chrome → \`chrome://extensions\` → Enable Developer mode → Drag \`.crx\` to install
+- **Offline (unpacked):** \`git clone https://github.com/zenkeellc/enke-chrome-ext.git\` → Chrome → \`chrome://extensions\` → Developer mode → Load unpacked
 
 ### Features
 - Right-click any link → \"Shorten this URL\"
-- Toolbar popup: paste & shorten
-- Keyboard shortcut: \`Ctrl+Shift+E\` / \`Cmd+Shift+E\`
-- Anonymous mode (without login) or logged-in (with analytics)
+- Toolbar popup: paste URL & shorten
+- Keyboard shortcut: \`Ctrl+Shift+E\` (Windows/Linux) / \`Cmd+Shift+E\` (Mac)
+- QR code generation for shortened links
+- Works anonymous or logged-in (with analytics)
 
 ### Permissions
-\`contextMenus\`, \`activeTab\`, \`clipboardWrite\`, \`storage\`, \`scripting\`
+\`contextMenus\`, \`activeTab\`, \`clipboardWrite\`, \`storage\`, \`scripting\`, \`notifications\`
 
 ### Changes
-- Initial release v$VERSION
-- Link shortening via right-click and toolbar popup
-- OAuth login integration with en.ke web" \
+See [GitHub releases](https://github.com/zenkeellc/$REPO/releases) for version history." \
     --repo "zenkeellc/$REPO" \
     $ASSETS
 else
