@@ -120,3 +120,4 @@ dist
 
 # Chrome Web Store publish credentials
 .env.publish
+enke-chrome-ext-v1.0.2.zip
