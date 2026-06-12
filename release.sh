@@ -52,7 +52,7 @@ if command -v gh &> /dev/null; then
     --notes "## enke Chrome Extension v$VERSION
 
 ### Install
-- **Chrome Web Store:** [Install from Chrome Web Store](https://chromewebstore.google.com/detail/enke-url-shortener-qr-cod/EXTENSION_ID_PLACEHOLDER)
+- **Chrome Web Store:** [Install from Chrome Web Store](https://chromewebstore.google.com/detail/enke-%E2%80%94-url-shortener-qr-c/ecopejjgiooodfcpgpdjakpkionmiigb)
 - **Offline (.crx):** Download \`$ZIPFILE\` below → Chrome → \`chrome://extensions\` → Enable Developer mode → Drag \`.crx\` to install
 - **Offline (unpacked):** \`git clone https://github.com/zenkeellc/enke-chrome-ext.git\` → Chrome → \`chrome://extensions\` → Developer mode → Load unpacked
 
