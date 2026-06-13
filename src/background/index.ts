@@ -143,6 +143,7 @@ async function handleAuthSuccess(msg: AuthMessage): Promise<void> {
     plan: 'hobby',
     role: 'user',
     subscription: null,
+    slugMinLength: 8,
     tokens: { token: '', refreshToken: '', tokenExp: 0, refreshTokenExp: 0 },
     recentLinks: [],
   };

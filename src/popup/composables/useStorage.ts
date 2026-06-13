@@ -10,6 +10,7 @@ function initialState(): UserState {
     plan: 'hobby',
     role: 'user',
     subscription: null,
+    slugMinLength: 8, // hobby default; updated from /api/v1/me planLimits
     tokens: { token: '', refreshToken: '', tokenExp: 0, refreshTokenExp: 0 },
     recentLinks: [],
   };
@@ -82,6 +83,7 @@ export function useStorage() {
     userState.value.plan = profile.plan;
     userState.value.role = profile.role;
     userState.value.subscription = profile.subscription;
+    userState.value.slugMinLength = profile.planLimits?.slugMinLength ?? 8;
   }
 
   function addRecentLink(link: RecentLink): void {

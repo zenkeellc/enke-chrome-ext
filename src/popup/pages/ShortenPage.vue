@@ -19,14 +19,13 @@ const url = ref('');
 const slug = ref('');
 const copied = ref(false);
 
-const SLUG_MIN: Record<string, number> = { hobby: 8, pro: 6, business: 5, enterprise: 4 };
 const PLAN_NAMES: Record<string, string> = { hobby: 'Hobby', pro: 'Pro', business: 'Business', enterprise: 'Enterprise' };
 
 // Slug validation
 const slugStatus = ref<'idle' | 'checking' | 'valid' | 'invalid' | 'taken'>('idle');
 let slugTimer: ReturnType<typeof setTimeout> | null = null;
 
-const slugMinLen = computed(() => SLUG_MIN[userState.value.plan] ?? 8);
+const slugMinLen = computed(() => userState.value.slugMinLength ?? 8);
 
 const slugFormatOk = computed(() => {
   const s = slug.value.trim();

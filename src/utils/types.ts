@@ -1,3 +1,13 @@
+/** Plan limits returned by /api/v1/me */
+export interface PlanLimits {
+  slugMinLength: number;
+  bulkBatchSize: number | null;
+  docFileSizeMB: number;
+  docMaxExpDays: number;
+  linkMaxExpirationDays: number;
+  linkMaxKeepDays: number;
+}
+
 /** User profile from /api/v1/me */
 export interface UserProfile {
   user_id: number;
@@ -6,6 +16,7 @@ export interface UserProfile {
   plan: string;
   role: string;
   subscription: SubRecord | null;
+  planLimits: PlanLimits;
 }
 
 export interface SubRecord {
@@ -59,6 +70,7 @@ export interface UserState {
   plan: string;
   role: string;
   subscription: SubRecord | null;
+  slugMinLength: number;
   tokens: TokenPair;
   recentLinks: RecentLink[];
 }
