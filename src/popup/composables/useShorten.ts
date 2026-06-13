@@ -13,7 +13,18 @@ function extractErrorMessage(e: unknown): string {
       if (typeof r.data === 'string') return r.data;
       if (typeof r.data === 'object') {
         const d = r.data as Record<string, unknown>;
-        if (typeof d.message === 'string') return d.message;
+        // New structured format: { error: "CODE", message: "...", params?: {...} }
+        if (typeof d.message === 'string') {
+          let msg = d.message;
+          // Append params if present (e.g. "Link limit reached. (100/100)")
+          if (d.params && typeof d.params === 'object') {
+            const p = d.params as Record<string, unknown>;
+            if (typeof p.limit === 'number' && typeof p.current === 'number') {
+              msg += ` (${p.current}/${p.limit})`;
+            }
+          }
+          return msg;
+        }
         if (typeof d.error === 'string') return d.error;
       }
     }

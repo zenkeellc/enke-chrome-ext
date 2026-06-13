@@ -94,7 +94,7 @@ PUBLISH_RESPONSE=$(curl -sS -X POST \
 
 echo "Publish response: $PUBLISH_RESPONSE"
 
-if echo "$PUBLISH_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); exit(0 if d.get('status') in ('OK','SUBMITTED_FOR_REVIEW','IN_REVIEW','PUBLISHED') else 1)" 2>/dev/null; then
+if echo "$PUBLISH_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); exit(0 if d.get('status') in ('OK','SUBMITTED_FOR_REVIEW','IN_REVIEW','PUBLISHED') or d.get('state') in ('PENDING_REVIEW','PUBLISHED') else 1)" 2>/dev/null; then
   echo "=== Published successfully! ==="
 else
   echo "NOTE: Publish returned unexpected status. Check response above."
