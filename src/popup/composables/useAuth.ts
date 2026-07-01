@@ -6,8 +6,9 @@ export function useAuth() {
   const storage = useStorage();
   const loggingIn: Ref<boolean> = ref(false);
   const error: Ref<string> = ref('');
+  const addAccountMode: Ref<boolean> = ref(false);
 
-  // Wire up API layer — these use the singleton userState ref directly
+  // Wire up API layer
   setTokenGetter(() => {
     const token = storage.getToken();
     return Promise.resolve(token);
@@ -33,6 +34,8 @@ export function useAuth() {
     await doLogout();
   });
 
+  // ── Token ────────────────────────────────────────────────────
+
   async function tryRefreshToken(): Promise<boolean> {
     const rt = storage.getRefreshToken();
     if (!rt) return false;
@@ -49,48 +52,65 @@ export function useAuth() {
     }
   }
 
+  // ── Init ─────────────────────────────────────────────────────
+
   async function init(): Promise<boolean> {
-    await storage.load();
-    if (storage.userState.value.isLoggedIn) {
-      // Refresh token if expired
-      if (!storage.getToken() && storage.getRefreshToken()) {
+    await storage.loadWithCache();
+
+    if (!storage.userState.value.isLoggedIn) {
+      return false;
+    }
+
+    // Local token validity check
+    const token = storage.getToken();
+    if (!token) {
+      const rt = storage.getRefreshToken();
+      if (rt) {
         const ok = await tryRefreshToken();
         if (!ok) {
           await doLogout();
           return false;
         }
+      } else {
+        await doLogout();
+        return false;
       }
-      // Fetch latest plan from API and persist only profile fields
-      // (avoids overwriting recentLinks that SW may have added)
-      try {
-        const res = await getMe();
-        console.log('[useAuth] /me raw response:', JSON.stringify(res.data));
-        storage.setProfile(res.data);
-        console.log('[useAuth] /me plan =', res.data.plan);
-        // Persist only plan/role/subscription — not the full state
-        const current = await chrome.storage.local.get('enke_user_state');
-        const s = (current.enke_user_state || {}) as Record<string, unknown>;
-        s.plan = res.data.plan || 'hobby';
-        s.role = res.data.role || 'user';
-        s.subscription = res.data.subscription || null;
-        await chrome.storage.local.set({ enke_user_state: s });
-      } catch (e) {
-        console.error('Failed to fetch /me, keeping existing state:', e);
-      }
-      return true;
     }
-    return false;
+
+    refreshProfileInBackground();
+    return true;
   }
 
-  async function startLogin(): Promise<void> {
+  // ── Profile refresh (non-blocking) ──────────────────────────
+
+  let profileRefreshPromise: Promise<void> | null = null;
+
+  function refreshProfileInBackground(): void {
+    if (profileRefreshPromise) return;
+    profileRefreshPromise = (async () => {
+      try {
+        const res = await getMe();
+        storage.setProfile(res.data);
+        await storage.save();
+      } catch (e) {
+        console.error('Background /me fetch failed:', e);
+      } finally {
+        profileRefreshPromise = null;
+      }
+    })();
+  }
+
+  // ── Login / Logout ──────────────────────────────────────────
+
+  async function startLogin(opts?: { addAccount?: boolean }): Promise<void> {
     loggingIn.value = true;
     error.value = '';
+    addAccountMode.value = !!opts?.addAccount;
 
     try {
       const extId = chrome.runtime.id;
+      // When adding account, don't prompt for account selection — Google shows the picker
       const loginUrl = `https://www.en.ke/login?source=extension&extid=${extId}`;
-      // active: true will focus the tab and close the popup
-      // User re-opens popup after login; init() handles the rest
       await chrome.tabs.create({ url: loginUrl, active: true });
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Failed to open login page';
@@ -101,9 +121,21 @@ export function useAuth() {
   }
 
   async function doLogout(): Promise<void> {
-    storage.clearState();
-    await chrome.storage.local.clear();
+    const email = storage.getActiveEmail();
+    if (email) {
+      await storage.removeAccount(email);
+    }
   }
+
+  // ── Account switching ───────────────────────────────────────
+
+  async function switchToAccount(email: string): Promise<void> {
+    await storage.switchAccount(email);
+    // Refresh profile for the new active account
+    refreshProfileInBackground();
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────
 
   function decodeJwtPayload(token: string): { exp?: number; [key: string]: unknown } {
     try {
@@ -121,8 +153,10 @@ export function useAuth() {
     storage,
     loggingIn,
     error,
+    addAccountMode,
     init,
     startLogin,
     doLogout,
+    switchToAccount,
   };
 }

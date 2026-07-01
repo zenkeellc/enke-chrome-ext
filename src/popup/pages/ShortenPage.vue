@@ -2,24 +2,25 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useShorten } from '../composables/useShorten';
 import { useStorage } from '../composables/useStorage';
+import { useI18n } from '@/i18n';
 import { checkSlug } from '@/utils/api';
 import LinkResult from '../components/LinkResult.vue';
 import RecentList from '../components/RecentList.vue';
-import HeaderBar from '../components/HeaderBar.vue';
 
 const emit = defineEmits<{
-  navigate: [page: 'login' | 'shorten' | 'history'];
-  logout: [];
+  navigate: [page: 'home' | 'shorten' | 'memories' | 'history'];
 }>();
 
 const { userState } = useStorage();
+const { t } = useI18n();
+
 const { shortening, result, error, aiLoading, shorten, suggestSlug, reset } = useShorten();
 
 const url = ref('');
 const slug = ref('');
 const copied = ref(false);
 
-const PLAN_NAMES: Record<string, string> = { hobby: 'Hobby', pro: 'Pro', business: 'Business', enterprise: 'Enterprise' };
+const PLAN_NAMES: Record<string, string> = { hobby: 'Hobby', pro: 'Pro', business: 'Business', max: 'Max' };
 
 // Slug validation
 const slugStatus = ref<'idle' | 'checking' | 'valid' | 'invalid' | 'taken'>('idle');
@@ -119,12 +120,13 @@ function handleReset() {
 
 <template>
   <div class="shorten-page">
-    <HeaderBar
-      :plan="userState.plan"
-      :user="userState.user"
-      @navigate="(p: 'history') => emit('navigate', p)"
-      @logout="emit('logout')"
-    />
+    <!-- Top bar -->
+    <div class="page-top-bar">
+      <button class="back-btn" @click="emit('navigate', 'home')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </button>
+      <h2 class="page-title">{{ t.shorten }}</h2>
+    </div>
 
     <!-- Input state -->
     <div v-if="!result" class="body-area">
@@ -217,8 +219,22 @@ function handleReset() {
 .shorten-page {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  flex: 1;
 }
+
+/* ── Top bar ──────────────────────────── */
+.page-top-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; background: var(--bg-base);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.back-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+.back-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.page-title { font-size: 14px; font-weight: 700; color: var(--text-primary); flex: 1; }
 
 .body-area {
   padding: 14px;

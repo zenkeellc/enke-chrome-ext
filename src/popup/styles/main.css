@@ -1,52 +1,84 @@
 /* ═══════════════════════════════════════════════════════════
-   en.ke Extension — Dark Terminal Luxe
+   en.ke Extension — Chrome-Style Design System
+   Light/Dark via prefers-color-scheme
    ═══════════════════════════════════════════════════════════ */
 
+/* ── Light Theme (default) ─────────────────────────────────── */
 :root {
-  /* Depth layers */
-  --bg-deep:    #08080e;
-  --bg-base:    #0e0e18;
-  --bg-surface: #14141f;
-  --bg-elevated:#1a1a2a;
-  --bg-hover:   #222236;
+  --bg-base:       #ffffff;
+  --bg-surface:    #f1f3f4;
+  --bg-elevated:   #ffffff;
+  --bg-hover:      rgba(0, 0, 0, 0.06);
+  --bg-active:     rgba(26, 115, 232, 0.10);
 
-  /* Accent — electric cyan */
-  --accent:       #00e5ff;
-  --accent-glow:  rgba(0, 229, 255, 0.18);
-  --accent-strong: #00b8d4;
-  --accent-dim:   rgba(0, 229, 255, 0.08);
+  --text-primary:   #202124;
+  --text-secondary: #5f6368;
+  --text-muted:     #80868b;
+  --text-inverse:   #ffffff;
 
-  /* Secondary — violet (AI, special) */
-  --violet:       #a78bfa;
-  --violet-glow:  rgba(167, 139, 250, 0.18);
+  --accent:         #1a73e8;
+  --accent-strong:  #1557b0;
+  --accent-dim:     rgba(26, 115, 232, 0.08);
+  --accent-glow:    rgba(26, 115, 232, 0.15);
+  --accent-text:    #1a73e8;
 
-  /* Success / Error */
-  --success: #34d399;
-  --error:   #f87171;
+  --border-default: rgba(0, 0, 0, 0.10);
+  --border-subtle:  rgba(0, 0, 0, 0.06);
 
-  /* Text */
-  --text-primary:   #e8e8ed;
-  --text-secondary: #9d9db5;
-  --text-muted:     #5c5c78;
-  --text-inverse:   #08080e;
+  --success: #0f9d58;
+  --error:   #d93025;
+  --warn:    #f9ab00;
+  --violet:  #7c3aed;
+  --violet-dim: rgba(124, 58, 237, 0.08);
 
-  /* Borders */
-  --border-subtle:  rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.10);
-  --border-glow:    rgba(0, 229, 255, 0.30);
-
-  /* Radii */
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
 
-  /* Timing */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
 }
 
-/* ─── Reset & Base ─────────────────────────────────────── */
+/* ── Dark Theme ────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base:       #1e1e1e;
+    --bg-surface:    #292a2d;
+    --bg-elevated:   #35363a;
+    --bg-hover:      rgba(255, 255, 255, 0.08);
+    --bg-active:     rgba(138, 180, 248, 0.15);
+
+    --text-primary:   #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-muted:     #6e7681;
+    --text-inverse:   #202124;
+
+    --accent:         #8ab4f8;
+    --accent-strong:  #aecbfa;
+    --accent-dim:     rgba(138, 180, 248, 0.12);
+    --accent-glow:    rgba(138, 180, 248, 0.20);
+    --accent-text:    #8ab4f8;
+
+    --border-default: rgba(255, 255, 255, 0.12);
+    --border-subtle:  rgba(255, 255, 255, 0.06);
+
+    --success: #81c995;
+    --error:   #f28b82;
+    --warn:    #fdd663;
+    --violet:  #c58af9;
+    --violet-dim: rgba(197, 138, 249, 0.10);
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+  }
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -54,43 +86,33 @@
 }
 
 html, body {
-  width: 360px;
-  max-height: 500px;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  width: 100%;
+  min-width: 280px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, system-ui, sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-primary);
-  background: var(--bg-deep);
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Subtle grain texture overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 128px 128px;
 }
 
 #app {
   width: 100%;
   min-height: 100%;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base);
 }
 
-/* ─── App Shell ────────────────────────────────────────── */
+/* ── App Shell ─────────────────────────────────────────────── */
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 340px;
+  min-height: 100vh;
 }
 
 .app--loading {
@@ -98,49 +120,36 @@ body::before {
   justify-content: center;
 }
 
-/* ─── Loading Spinner ───────────────────────────────────── */
-.loading-spinner {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--border-default);
-  border-top-color: var(--accent);
-  animation: spin 0.7s linear infinite;
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ─── Scrollbar ────────────────────────────────────────── */
-::-webkit-scrollbar { width: 3px; }
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: var(--border-default);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
-/* ─── Focus Ring ───────────────────────────────────────── */
+/* ── Focus ─────────────────────────────────────────────────── */
 input:focus-visible,
-button:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--accent-glow);
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
 }
 
-/* ─── Shared Input Styles ──────────────────────────────── */
+/* ── Inputs ────────────────────────────────────────────────── */
 .input-field {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-size: 13px;
-  color: var(--text-primary);
-  transition: all 0.2s var(--ease-out);
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
   font-size: 12px;
+  color: var(--text-primary);
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
   letter-spacing: -0.01em;
 }
 
@@ -150,48 +159,43 @@ button:focus-visible {
 
 .input-field:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-dim), 0 0 20px var(--accent-glow);
-  background: var(--bg-elevated);
+  box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
-/* ─── Shared Button Styles ─────────────────────────────── */
+/* ── Buttons ───────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 18px;
+  gap: 6px;
+  padding: 8px 14px;
   border: none;
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.15s var(--ease-out);
   letter-spacing: -0.01em;
-  position: relative;
-  overflow: hidden;
 }
 
 .btn:disabled {
-  opacity: 0.35;
+  opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 .btn--primary {
   background: var(--accent);
-  color: var(--text-inverse);
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .btn--primary:hover:not(:disabled) {
-  box-shadow: 0 0 24px var(--accent-glow), 0 4px 16px rgba(0, 229, 255, 0.12);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px var(--accent-dim), var(--shadow-sm);
 }
 
 .btn--primary:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 0 8px var(--accent-glow);
+  transform: scale(0.98);
 }
 
 .btn--ghost {
@@ -208,17 +212,27 @@ button:focus-visible {
 
 .btn--outline {
   background: transparent;
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--accent);
   color: var(--accent);
 }
 
 .btn--outline:hover:not(:disabled) {
-  border-color: var(--accent);
   background: var(--accent-dim);
-  box-shadow: 0 0 16px var(--accent-dim);
 }
 
-/* ─── Toast & Feedback ─────────────────────────────────── */
+/* ── Loading Spinner ───────────────────────────────────────── */
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--accent);
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Animations ────────────────────────────────────────────── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }

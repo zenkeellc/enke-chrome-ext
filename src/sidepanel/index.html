@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>en.ke</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; min-width: 340px; height: 100vh;
+      background: #08080e; color: #e8e8ed;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+    }
+    .critical-loading {
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; color: #5c5c78;
+    }
+    .critical-error {
+      display: none; padding: 24px; color: #f87171; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="critical-loading">Loading…</div>
+  </div>
+  <div class="critical-error" id="critical-error"></div>
+  <script type="module" src="./index.ts"></script>
+</body>
+</html>
